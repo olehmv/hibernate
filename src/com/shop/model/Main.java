@@ -1,9 +1,5 @@
 package com.shop.model;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -12,8 +8,8 @@ public class Main {
 
 	public static void main(String[] args) {
 		SessionFactory sf = new Configuration().configure().buildSessionFactory();
-		Session s = sf.openSession();
-		s.beginTransaction();
+		Session session = sf.openSession();
+		session.beginTransaction();
 		String[] n = { "oleg", "ivan", "igor" };
 		String[] pn = { "23-34-667", "34-65-567", "23-45'678" };
 		String[] zip = { "80300", "79000", "80344" };
@@ -21,22 +17,18 @@ public class Main {
 		String[] str = { "str.Ypa 1", "str.Franka 54", "str.Lisova 6" };
 		String[] pb = { "Nokia", "LG", "Lenovo" };
 		String[] pm = { "N-70", "A-50", "V-1000" };
-		Buyer b;
-		for (int i = 0; i < pn.length; i++) {
-			b = new Buyer(n[i], pn[i]);
-			b.getBuyeraddresses().add(new HomeAddress(zip[i], ct[i], str[i]));
-			b.getBuyerPhones().add(new Phone(pb[i], pm[i],(double)Math.random()+100*i));
-			s.save(b);
-		}
-		// b = s.get(Buyer.class, 1);
-		// for (Iterator iterator = b.getBuyeraddresses().iterator();
-		// iterator.hasNext();) {
-		// Address type = (Address) iterator.next();
-		// System.out.println(type.toString());
-		// }
-
-		s.getTransaction().commit();
-		s.close();
+		Buyer b = new Buyer(n[1], pn[1]);
+		Seller s = new Seller(n[0], pn[0]);
+		//Basket bsk = new Basket();
+		b.setBuyerAddress(new BuyerAddress(zip[1], ct[1], str[1]));
+		s.setSellerAddress(new SellerAddress(zip[2], ct[2], str[2]));
+		s.getSellerPhones().add(new Phone(pb[0], pm[0], 456.5));
+		//b.setBasket(bsk);
+		//b.getBasket().getBasketPhones().addAll(s.getSellerPhones());
+		session.save(s);
+		session.save(b);
+		session.getTransaction().commit();
+		session.close();
 	}
 
 }

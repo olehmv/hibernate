@@ -1,40 +1,27 @@
 package com.shop.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-
-import org.hibernate.annotations.IndexColumn;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Buyer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int buyerId;
-	@Column
 	private String name;
-	@Column
 	private String phoneNumber;
-	@SuppressWarnings("deprecation")
-	@OneToMany(cascade = { CascadeType.ALL })
-	@JoinColumn(name = "buyerId")
-	@IndexColumn(name = "idx")
-	private Collection<Address> buyeraddresses = new ArrayList<>();
-	@SuppressWarnings("deprecation")
-	@OneToMany(cascade = { CascadeType.ALL })
-	@JoinColumn(name = "buyerId")
-	@IndexColumn(name = "idx")
-	private Collection<Phone> buyerPhones = new ArrayList<>();
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "backetFk")
+	private Basket basket;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "addressFk")
+	private Address buyerAddress;
 
 	public Buyer() {
 		super();
@@ -70,20 +57,20 @@ public class Buyer {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public Collection<Address> getBuyeraddresses() {
-		return buyeraddresses;
+	public Basket getBasket() {
+		return basket;
 	}
 
-	public void setBuyeraddresses(Collection<Address> buyeraddresses) {
-		this.buyeraddresses = buyeraddresses;
+	public void setBasket(Basket basket) {
+		this.basket = basket;
 	}
 
-	public Collection<Phone> getBuyerPhones() {
-		return buyerPhones;
+	public Address getBuyerAddress() {
+		return buyerAddress;
 	}
 
-	public void setBuyerPhones(Collection<Phone> buyerPhones) {
-		this.buyerPhones = buyerPhones;
+	public void setBuyerAddress(Address buyerAddress) {
+		this.buyerAddress = buyerAddress;
 	}
 
 }

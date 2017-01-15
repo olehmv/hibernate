@@ -1,0 +1,41 @@
+@SuppressWarnings("deprecation")
+	@OneToMany(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "buyerId")
+	@IndexColumn(name = "idx")
+	private Collection<Address> buyeraddresses = new ArrayList<>();
+	@SuppressWarnings("deprecation")
+	@OneToMany(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "buyerId")
+	@IndexColumn(name = "idx")
+	private Collection<Phone> buyerPhones = new ArrayList<>();
+				b.get(new Phone(pb[i], pm[i],(double)Math.random()+100*i));
+	<property name="cache.use_query_cache">true</property>
+		<property name="cache.use_second_level_cache">true</property>
+		<property name="cache.region.factory_class">org.hibernate.cache.EhCacheRegionFactory</property>
+			@JoinColumn(name = "buyerId", insertable = false, updatable = false)
+			//
+//		for (int i = 0; i < pn.length; i++) {
+//			s = new Seller(n[i], pn[i]);
+//			s.setSellerAddress(new SellerAddress(zip[i], ct[i], str[i]));
+//			s.getSellerPhones().add(new Phone(pb[i], pm[i], (double) Math.random() + 100 * i));
+//			session.save(s);
+//			bs = new Basket();
+//			bs.getBasketPhones().addAll(s.getSellerPhones());
+//			session.save(bs);
+//			b = new Buyer(n[i], pn[i]);
+//			b.setBuyerAddress(new BuyerAddress(zip[i], ct[i], str[i]));
+//			b.getBasket().getBasketPhones().addAll(s.getSellerPhones());
+//			session.save(b);
+//
+//		}
+		// b = s.get(Buyer.class, 1);
+		// for (Iterator iterator = b.getBuyeraddresses().iterator();
+		// iterator.hasNext();) {
+		// Address type = (Address) iterator.next();
+		// System.out.println(type.toString());
+		// }
+		
+		
+		Caused by: com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry '3' for key 'PRIMARY'
+		
+		

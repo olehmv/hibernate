@@ -1,5 +1,6 @@
 package com.shop.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,15 +11,17 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Phone {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private long phoneId; 
+	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	private int phoneId; 
 	private String brand;
 	private String model;
 	private Double price;
 	@ManyToOne
-	@JoinColumn(name="buyerId", 
-				insertable=false, updatable=false)
-	private Buyer buyer;
+	@JoinColumn(name="sellerId",insertable=false, updatable=false)
+	private Seller seller;
+	@ManyToOne
+	@JoinColumn(name="basketId",insertable=false, updatable=false)
+	private Basket basket;
 	public Phone() {
 		super();
 	}

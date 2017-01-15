@@ -9,19 +9,20 @@
 	<session-factory>
 		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
 		<property name="hibernate.connection.username">root</property>
-		<property name="hibernate.connection.password">oleg</property>
+		<property name="hibernate.connection.password">root</property>
 		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/phone-shop</property>
 		<property name="hibernate.hbm2ddl.auto">create</property>
 		<property name="hibernate.connection.pool_size">5</property>
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 
 		<property name="show_sql">true</property>
-		<property name="cache.use_query_cache">true</property>
-		<property name="cache.use_second_level_cache">true</property>
-		<property name="cache.region.factory_class">org.hibernate.cache.EhCacheRegionFactory</property>
-		<mapping class="com.shop.model.Buyer" />
-		<mapping class="com.shop.model.Address" />
-		<mapping class="com.shop.model.HomeAddress" />
+
 		<mapping class="com.shop.model.Phone" />
+		<mapping class="com.shop.model.Address" />
+		<mapping class="com.shop.model.Basket" />
+		<mapping class="com.shop.model.Seller" />
+		<mapping class="com.shop.model.SellerAddress" />
+		<mapping class="com.shop.model.Buyer" />
+		<mapping class="com.shop.model.BuyerAddress" />
 	</session-factory>
 </hibernate-configuration>
