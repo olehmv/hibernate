@@ -1,27 +1,36 @@
 package com.shop.model;
 
-import javax.persistence.Column;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.IndexColumn;
+
 @Entity
-public class Phone {
+public class Phone implements Serializable{
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
-	private int phoneId; 
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	//private int phoneId; 
+	@ManyToOne(cascade = { CascadeType.ALL })
+	@JoinColumn(name="sellerId")
+	private Seller seller;
 	private String brand;
 	private String model;
 	private Double price;
-	@ManyToOne
-	@JoinColumn(name="sellerId",insertable=false, updatable=false)
-	private Seller seller;
-	@ManyToOne
-	@JoinColumn(name="basketId",insertable=false, updatable=false)
-	private Basket basket;
+	@ManyToMany(cascade = CascadeType.DETACH,mappedBy="basketPhones")
+	private Set<Basket> baskets=new HashSet<>();
 	public Phone() {
 		super();
 	}
@@ -56,4 +65,32 @@ public class Phone {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
+
+//	public int getPhoneId() {
+//		return phoneId;
+//	}
+//
+//	public void setPhoneId(int phoneId) {
+//		this.phoneId = phoneId;
+//	}
+
+	public Seller getSeller() {
+		return seller;
+	}
+
+	public void setSeller(Seller seller) {
+		this.seller = seller;
+	}
+
+	public Set<Basket> getBaskets() {
+		return baskets;
+	}
+
+	public void setBaskets(Set<Basket> baskets) {
+		this.baskets = baskets;
+	}
+
+	
+	
+	
 }

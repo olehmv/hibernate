@@ -15,8 +15,8 @@ import javax.persistence.InheritanceType;
 @DiscriminatorColumn(name = "addresses", discriminatorType = DiscriminatorType.STRING)
 public abstract class Address {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "addressPk")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "addressId")
 	protected int address;
 	protected String zipCod;
 	protected String city;

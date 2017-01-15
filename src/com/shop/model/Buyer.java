@@ -12,15 +12,15 @@ import javax.persistence.OneToOne;
 @Entity
 public class Buyer {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int buyerId;
 	private String name;
 	private String phoneNumber;
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "backetFk")
+	@JoinColumn(name = "basketId")
 	private Basket basket;
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "addressFk")
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "addressId")
 	private Address buyerAddress;
 
 	public Buyer() {

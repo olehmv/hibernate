@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,19 +20,16 @@ import org.hibernate.annotations.IndexColumn;
 @Entity
 public class Seller {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int sellerId;
 	private String name;
 	private String phoneNumber;
-	@OneToOne(cascade = { CascadeType.ALL })
-	@JoinColumn(name = "sellerFk")
+	@OneToOne(cascade = { CascadeType.ALL },fetch = FetchType.EAGER)
+	@JoinColumn(name = "addressId")
 	private Address sellerAddress;
-
-//	@ElementCollection
-//    @JoinColumn(name = "sellerFK")
 	@SuppressWarnings("deprecation")
-	@OneToMany(cascade = { CascadeType.ALL })
-	@JoinColumn(name="basketId")
+	@OneToMany(cascade = { CascadeType.ALL },fetch = FetchType.EAGER)
+	@JoinColumn(name="sellerId")
 	@IndexColumn(name = "idx")
 	private Collection<Phone> sellerPhones = new ArrayList<>();
 
@@ -38,6 +37,12 @@ public class Seller {
 		this.name = name;
 		this.phoneNumber = phoneNumber;
 	}
+	
+
+	public Seller() {
+		super();
+	}
+
 
 	public int getSellerId() {
 		return sellerId;
