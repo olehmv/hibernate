@@ -1,7 +1,9 @@
 package com.shop.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,10 +21,16 @@ import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.IndexColumn;
 
-@Embeddable
-public class Basket {
-	@OneToMany(cascade=CascadeType.DETACH)
-	@JoinTable(name = "basketPhones",joinColumns = @JoinColumn(name = "buyerId"), inverseJoinColumns = @JoinColumn(name = "phoneId"))
+@Entity
+public class Basket implements Serializable {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int basketId;
+	@OneToOne(mappedBy = "basket", fetch = FetchType.LAZY)
+	@JoinColumn(name = "buyerId")
+	private Buyer buyer;
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "basketPhones", joinColumns = @JoinColumn(name = "basketId"), inverseJoinColumns = @JoinColumn(name = "phoneId",nullable=true))
 	private Collection<Phone> basketPhones = new ArrayList<>();
 
 	public Basket() {
@@ -37,4 +45,25 @@ public class Basket {
 		this.basketPhones = basketPhones;
 	}
 
+	public int getBasketId() {
+		return basketId;
+	}
+
+	public void setBasketId(int basketId) {
+		this.basketId = basketId;
+	}
+
+	public Buyer getBuyer() {
+		return buyer;
+	}
+
+	public void deletePhone(Phone phone) {
+		for (Iterator<Phone> iterator = basketPhones.iterator(); iterator.hasNext();) {
+			Phone ph =  iterator.next();
+			if (ph == phone) {
+				basketPhones.remove(ph);
+			}
+
+		}
+	}
 }

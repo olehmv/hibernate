@@ -16,6 +16,8 @@ public class Buyer {
 	private int buyerId;
 	private String name;
 	private String phoneNumber;
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="basketId")
 	private Basket basket;
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name = "addressId")

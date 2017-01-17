@@ -1,36 +1,34 @@
 package com.shop.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.sql.Blob;
+import java.sql.Clob;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-
-import org.hibernate.annotations.IndexColumn;
+import javax.persistence.OneToOne;
 
 @Entity
-public class Phone{
+public class Phone {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int phoneId; 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int phoneId;
 	private String brand;
 	private String model;
 	private Double price;
-	@ManyToOne
-	@JoinColumn(name="sellerId")
+	private Clob desciption;
+	private Blob image;
+	private String status;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "sellerId")
 	private Seller seller;
-	private Basket basket;
+
 	public Phone() {
 		super();
 	}
@@ -40,6 +38,7 @@ public class Phone{
 		this.brand = brand;
 		this.model = model;
 		this.price = price;
+		this.status = Status.AVAILABLE.getValue();
 	}
 
 	public String getBrand() {
@@ -73,5 +72,66 @@ public class Phone{
 	public void setPhoneId(int phoneId) {
 		this.phoneId = phoneId;
 	}
+
+	public Clob getDesciption() {
+		return desciption;
+	}
+
+	public void setDesciption(Clob desciption) {
+		this.desciption = desciption;
+	}
+
+	public Blob getImage() {
+		return image;
+	}
+
+	public void setImage(Blob image) {
+		this.image = image;
+	}
+
+	public Seller getSeller() {
+		return seller;
+	}
+
+	public void setSeller(Seller seller) {
+		this.seller = seller;
+	}
+
+	public Status getStatus() {
+		return Status.parse(this.status);
+	}
+
+	public void setStatus(Status status) {
+		this.status = status.getValue();
+	}
+
+	@Override
+	public String toString() {
+		return "Phone [phoneId=" + phoneId + ", brand=" + brand + ", model=" + model + ", price=" + price
+				+ ", desciption=" + desciption + ", image=" + image + ", status=" + status + ", seller=" + seller + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + phoneId;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Phone other = (Phone) obj;
+		if (phoneId != other.phoneId)
+			return false;
+		return true;
+	}
 	
+
 }

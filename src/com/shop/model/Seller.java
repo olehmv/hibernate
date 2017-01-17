@@ -27,7 +27,7 @@ public class Seller {
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name = "addressId")
 	private Address sellerAddress;
-	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="sellerId")
 	private Collection<Phone> sellerPhones = new ArrayList<>();
 

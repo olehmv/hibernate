@@ -1,5 +1,6 @@
 package com.shop.model;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -20,23 +21,11 @@ public class Main {
 		String[] str = { "str.Ypa 1", "str.Franka 54", "str.Lisova 6" };
 		String[] pb = { "Nokia", "LG", "Lenovo" };
 		String[] pm = { "N-70", "A-50", "V-1000" };
-//		Buyer b = new Buyer(n[1], pn[1]);
-//		Seller s = new Seller(n[0], pn[0]);
-//		Basket bsk = new Basket();
-//		b.setBuyerAddress(new BuyerAddress(zip[1], ct[1], str[1]));
-//		s.setSellerAddress(new SellerAddress(zip[2], ct[2], str[2]));
-//		s.getSellerPhones().add(new Phone(pb[0], pm[0], 456.5));
-//		b.setBasket(bsk);
-//		b.getBasket().getBasketPhones().addAll(s.getSellerPhones());
-//		session.save(s);
-//		session.save(b);
+
+		//session.delete(session.get(Seller.class, 3));
+
+		//session.delete(session.get(Buyer.class, 2));
 		
-		session.remove(session.get(Seller.class, 3));
-
-		//session.delete(session.get(Buyer.class, 3));
-
-		//session.get(Buyer.class, 3).getBasket().getBasketPhones().addAll(session.get(Seller.class, 2).getSellerPhones());
-
 //		for (int i = 0; i < pn.length; i++) {
 //			Seller s = new Seller(n[i], pn[i]);
 //			s.setSellerAddress(new SellerAddress(zip[i], ct[i], str[i]));
@@ -48,6 +37,18 @@ public class Main {
 //			session.save(s);
 //			session.save(b);
 //		}
+		
+		Buyer b=session.get(Buyer.class, 1);
+		Collection<Phone> p=b.getBasket().getBasketPhones();
+		for (Iterator<Phone> iterator = p.iterator(); iterator.hasNext();) {
+			Phone phone = iterator.next();
+			System.out.println(phone.toString());
+			b.getBasket().deletePhone(phone);
+			System.out.println(phone.toString()+"deleted");
+
+			
+		}
+		session.save(b);
 
 		session.getTransaction().commit();
 		session.close();
