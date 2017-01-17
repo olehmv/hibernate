@@ -1,5 +1,8 @@
 package com.shop.model;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -28,22 +31,23 @@ public class Main {
 //		session.save(s);
 //		session.save(b);
 		
-		//session.delete(session.get(Seller.class, 2));
-		//session.get(Buyer.class, 3).getBasket().getBasketPhones().add(session.get(Phone.class, 2));
+		session.remove(session.get(Seller.class, 3));
 
-		for (int i = 0; i < pn.length; i++) {
-			Buyer b = new Buyer(n[i], pn[i]);
-			Seller s = new Seller(n[i], pn[i]);
-			Basket bsk = new Basket();
-			b.setBuyerAddress(new BuyerAddress(zip[i], ct[i], str[i]));
-			s.setSellerAddress(new SellerAddress(zip[i], ct[i], str[i]));
-			s.getSellerPhones().add(new Phone(pb[i], pm[i], (double) Math.random() + 100 * i));
-			b.setBasket(bsk);
-			b.getBasket().getBasketPhones().addAll(s.getSellerPhones());
-			session.save(s);
-			session.save(b);
-			
-		}
+		//session.delete(session.get(Buyer.class, 3));
+
+		//session.get(Buyer.class, 3).getBasket().getBasketPhones().addAll(session.get(Seller.class, 2).getSellerPhones());
+
+//		for (int i = 0; i < pn.length; i++) {
+//			Seller s = new Seller(n[i], pn[i]);
+//			s.setSellerAddress(new SellerAddress(zip[i], ct[i], str[i]));
+//			s.getSellerPhones().add(new Phone(pb[i], pm[i], (double) Math.random() + 100 * i));
+//			s.getSellerPhones().add(new Phone(pb[i], pm[i], (double) Math.random() + 100 * i));
+//			Buyer b = new Buyer(n[i], pn[i]);
+//			b.setBuyerAddress(new BuyerAddress(zip[i], ct[i], str[i]));
+//			b.getBasket().getBasketPhones().addAll(s.getSellerPhones());
+//			session.save(s);
+//			session.save(b);
+//		}
 
 		session.getTransaction().commit();
 		session.close();

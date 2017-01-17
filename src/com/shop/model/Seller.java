@@ -24,13 +24,11 @@ public class Seller {
 	private int sellerId;
 	private String name;
 	private String phoneNumber;
-	@OneToOne(cascade = { CascadeType.ALL },fetch = FetchType.EAGER)
+	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name = "addressId")
 	private Address sellerAddress;
-	@SuppressWarnings("deprecation")
-	@OneToMany(cascade = { CascadeType.ALL },fetch = FetchType.EAGER)
+	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
 	@JoinColumn(name="sellerId")
-	@IndexColumn(name = "idx")
 	private Collection<Phone> sellerPhones = new ArrayList<>();
 
 	public Seller(String name, String phoneNumber) {

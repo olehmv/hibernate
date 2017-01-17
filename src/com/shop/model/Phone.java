@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -19,18 +20,17 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.IndexColumn;
 
 @Entity
-public class Phone implements Serializable{
+public class Phone{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	//private int phoneId; 
-	@ManyToOne(cascade = { CascadeType.ALL })
-	@JoinColumn(name="sellerId")
-	private Seller seller;
+	private int phoneId; 
 	private String brand;
 	private String model;
 	private Double price;
-	@ManyToMany(cascade = CascadeType.DETACH,mappedBy="basketPhones")
-	private Set<Basket> baskets=new HashSet<>();
+	@ManyToOne
+	@JoinColumn(name="sellerId")
+	private Seller seller;
+	private Basket basket;
 	public Phone() {
 		super();
 	}
@@ -66,31 +66,12 @@ public class Phone implements Serializable{
 		this.price = price;
 	}
 
-//	public int getPhoneId() {
-//		return phoneId;
-//	}
-//
-//	public void setPhoneId(int phoneId) {
-//		this.phoneId = phoneId;
-//	}
-
-	public Seller getSeller() {
-		return seller;
+	public int getPhoneId() {
+		return phoneId;
 	}
 
-	public void setSeller(Seller seller) {
-		this.seller = seller;
+	public void setPhoneId(int phoneId) {
+		this.phoneId = phoneId;
 	}
-
-	public Set<Basket> getBaskets() {
-		return baskets;
-	}
-
-	public void setBaskets(Set<Basket> baskets) {
-		this.baskets = baskets;
-	}
-
-	
-	
 	
 }

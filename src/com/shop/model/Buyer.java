@@ -16,10 +16,8 @@ public class Buyer {
 	private int buyerId;
 	private String name;
 	private String phoneNumber;
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "basketId")
 	private Basket basket;
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name = "addressId")
 	private Address buyerAddress;
 
@@ -31,6 +29,7 @@ public class Buyer {
 		super();
 		this.name = name;
 		this.phoneNumber = phoneNumber;
+		this.basket=new Basket();
 	}
 
 	public int getBuyerId() {
